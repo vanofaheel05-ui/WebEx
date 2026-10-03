@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WEBX</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b0b0f;
+    color: white;
+}
+
+header {
+    height: 70px;
+    background: #15151c;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    border-bottom: 1px solid #292932;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -2px;
+}
+
+.logo span {
+    color: #e50920;
+}
+
+nav {
+    margin-left: 40px;
+    display: flex;
+    gap: 25px;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: #bbb;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+nav button:hover {
+    color: white;
+}
+
+.account {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.stat {
+    background: #202029;
+    padding: 9px 13px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.coins {
+    color: #ffd43b;
+}
+
+main {
+    padding: 30px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.hero {
+    background: linear-gradient(135deg, #191922, #101014);
+    padding: 45px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #aaa;
+    font-size: 17px;
+}
+
+.section-title {
+    margin: 30px 0 15px;
+    font-size: 24px;
+}
+
+.games {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.game {
+    background: #17171f;
+    border: 1px solid #292932;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.game:hover {
+    transform: translateY(-4px);
+    border-color: #e50920;
+}
+
+.thumbnail {
+    height: 130px;
+    background: linear-gradient(135deg, #272733, #101014);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+}
+
+.game-info {
+    padding: 15px;
+}
+
+.game-info h3 {
+    margin-bottom: 6px;
+}
+
+.game-info p {
+    color: #888;
+    font-size: 13px;
+}
+
+button.primary {
+    background: #e50920;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button.primary:hover {
+    background: #ff1930;
+}
+
+.upload-box {
+    background: #17171f;
+    border: 2px dashed #3a3a46;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+}
+
+.upload-box input {
+    margin-top: 20px;
+}
+
+.profile {
+    background: #17171f;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.progress {
+    height: 15px;
+    background: #292932;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #e50920;
+}
+
+.empty {
+    color: #777;
+    padding: 30px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+WEB<span>X</span>
+</div>
+
+<nav>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('discover')">Discover</button>
+<button onclick="showPage('upload')">Upload</button>
+<button onclick="showPage('profile')">Profile</button>
+</nav>
+
+<div class="account">
+
+<div class="stat">
+Level <b id="level">1</b>
+</div>
+
+<div class="stat">
+EXP <b id="exp">0</b>
+</div>
+
+<div class="stat coins">
+🪙 <b id="coins">0</b>
+</div>
+
+</div>
+
+</header>
+
+<main>
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+<div class="hero">
+
+<h1>Welcome to WEBX</h1>
+
+<p>
+Play games made by the WEBX community.
+</p>
+
+<br>
+
+<button class="primary"
+onclick="showPage('discover')">
+Discover Games
+</button>
+
+</div>
+
+<h2 class="section-title">
+🔥 Popular Picks
+</h2>
+
+<div class="games" id="popularGames">
+
+<div class="empty">
+No games have been uploaded yet.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- DISCOVER -->
+
+<section id="discover" class="page">
+
+<h1>Discover Games</h1>
+
+<h2 class="section-title">
+🎲 Random Picks
+</h2>
+
+<div class="games" id="randomGames">
+
+<div class="empty">
+No games available yet.
+</div>
+
+</div>
+
+<h2 class="section-title">
+🆕 New Games
+</h2>
+
+<div class="games" id="newGames">
+
+<div class="empty">
+No games available yet.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- UPLOAD -->
+
+<section id="upload" class="page">
+
+<h1>Upload a Game</h1>
+
+<br>
+
+<div class="upload-box">
+
+<h2>Upload your game</h2>
+
+<p style="color:#888;margin-top:10px">
+Game files will eventually be stored online.
+</p>
+
+<input
+type="file"
+id="gameFile"
+multiple
+>
+
+<br><br>
+
+<button
+class="primary"
+onclick="uploadGame()">
+Upload Game
+</button>
+
+<p id="uploadStatus"
+style="margin-top:20px;color:#aaa">
+</p>
+
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="page">
+
+<h1>Your Profile</h1>
+
+<br>
+
+<div class="profile">
+
+<h2>WEBX Player</h2>
+
+<br>
+
+<p>
+Level: <b id="profileLevel">1</b>
+</p>
+
+<p style="margin-top:10px">
+EXP: <b id="profileExp">0</b> /
+<b id="profileCap">100</b>
+</p>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+id="expBar">
+</div>
+
+</div>
+
+<br>
+
+<p>
+🪙 WebCoins:
+<b id="profileCoins">0</b>
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+
+<script>
+
+let player = {
+    level: 1,
+    exp: 0,
+    expCap: 100,
+    coins: 0
+};
+
+
+/* LOAD LOCAL DATA */
+
+function loadPlayer() {
+
+    const saved =
+        localStorage.getItem("webx_player");
+
+    if (saved) {
+        player = JSON.parse(saved);
+    }
+
+    updateUI();
+}
+
+
+/* SAVE DATA */
+
+function savePlayer() {
+
+    localStorage.setItem(
+        "webx_player",
+        JSON.stringify(player)
+    );
+
+}
+
+
+/* UPDATE UI */
+
+function updateUI() {
+
+    document.getElementById("level").textContent =
+        player.level;
+
+    document.getElementById("exp").textContent =
+        player.exp;
+
+    document.getElementById("coins").textContent =
+        player.coins;
+
+    document.getElementById("profileLevel").textContent =
+        player.level;
+
+    document.getElementById("profileExp").textContent =
+        player.exp;
+
+    document.getElementById("profileCap").textContent =
+        player.expCap;
+
+    document.getElementById("profileCoins").textContent =
+        player.coins;
+
+    const percent =
+        Math.min(
+            (player.exp / player.expCap) * 100,
+            100
+        );
+
+    document.getElementById("expBar").style.width =
+        percent + "%";
+}
+
+
+/* LEVEL SYSTEM */
+
+function addEXP(amount) {
+
+    player.exp += amount;
+
+    while (player.exp >= player.expCap) {
+
+        player.exp -= player.expCap;
+
+        player.level++;
+
+        player.coins += 100;
+
+        player.expCap =
+            Math.floor(player.expCap * 1.2) + 25;
+    }
+
+    savePlayer();
+
+    updateUI();
+}
+
+
+/* PAGE SWITCHING */
+
+function showPage(page) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
+
+    document
+        .getElementById(page)
+        .classList.add("active");
+}
+
+
+/* UPLOAD PLACEHOLDER */
+
+function uploadGame() {
+
+    const file =
+        document.getElementById("gameFile").files[0];
+
+    const status =
+        document.getElementById("uploadStatus");
+
+    if (!file) {
+
+        status.textContent =
+            "Choose a game file first.";
+
+        return;
+    }
+
+    status.textContent =
+        "Game selected: " + file.name +
+        ". Online uploading will be connected next.";
+
+}
+
+
+/* START */
+
+loadPlayer();
+
+</script>
+
+</body>
+</html>
